@@ -1,49 +1,19 @@
-import React, { useContext, useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
+import React, { useContext } from 'react'
+import { StyleSheet } from 'react-native'
+import BlogPostForm from '../components/BlogPostForm'
 import { Context } from '../context/BlogContext'
 
 const CreateScreen = ({ navigation }) => {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
   const { addBlogPost } = useContext(Context)
   return (
-    <View>
-      <Text style={styles.label}>Enter Title:</Text>
-      <TextInput
-        style={styles.input}
-        value={title}
-        onChangeText={text => setTitle(text)}
-      />
-      <Text style={styles.label}>Enter Content:</Text>
-      <TextInput
-        style={styles.input}
-        value={content}
-        onChangeText={text => setContent(text)}
-      />
-      <Button
-        title="Add Blog Post"
-        onPress={() => addBlogPost(title, content, () => {
-          navigation.navigate('Index')
-        })}
-      />
-    </View>
+    <BlogPostForm
+      onSubmit={(title, content) => {
+        addBlogPost(title, content, () => navigation.navigate('Index'))
+      }}
+    />
   )
 }
 
-const styles = StyleSheet.create({
-  input: {
-    fontSize: 18,
-    borderWidth: 1,
-    marginBottom: 15,
-    margin: 10,
-    borderColor: 'gray',
-    padding: 5,
-  },
-  label: {
-    fontSize: 20,
-    marginBottom: 0,
-    margin: 10,
-  }
-})
+const styles = StyleSheet.create({})
 
 export default CreateScreen
